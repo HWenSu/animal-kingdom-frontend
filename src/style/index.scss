@@ -37,6 +37,8 @@ a:hover {
   color: $orange-color;
 }
 
+
+
 body {
   margin: 0;
   place-items: center;
@@ -51,15 +53,7 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+all: unset;
 }
 button:hover {
   border-color: #646cff;
@@ -69,18 +63,18 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
+// @media (prefers-color-scheme: light) {
+//   :root {
+//     color: #213547;
+//     background-color: #ffffff;
+//   }
+//   a:hover {
+//     color: #747bff;
+//   }
+//   button {
+//     background-color: #f9f9f9;
+//   }
+// }
 
 //通用樣式
 .black-overlay {
@@ -115,6 +109,41 @@ button:focus-visible {
   }
 }
 
+// 元件樣式： flower-h2
+.flower-h2{
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 20;
+   &:hover svg{
+    transform: rotate(180deg);
+  }
+  svg {
+    animation: 
+      opacity 1s ease-in-out forwards,
+      rotate 2s cubic-bezier(0.5, 0, 0.13, 1) ;
+      transition: transform 2s cubic-bezier(0.5, 0, 0.13, 1); /* hover 時的平滑過渡 */
+    }
+  h2{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+  }
+}
+// 按鈕樣式： 
+.main-btn{
+  width: 10rem;
+  height: 3rem;
+  border-radius: 30px;
+  background-color: $orange-color;
+  color: #fff;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
 // HomePage: hero section
 .hero-section{
   position: relative;
@@ -138,59 +167,44 @@ button:focus-visible {
   }
 }
 
-// Adoption Page: filter form
-.filter-form-container{
-  width: 60vw;
-  margin: 5% auto;
-  .filter-form-bg{
+//選擇器樣式
+.custom-select{
+  /* 基本樣式 */
+  width: 200px; /* 設定寬度 */
+  padding: 8px 12px; /* 內邊距 */
+  font-size: 16px; /* 字體大小 */
+  border: 2px solid #ccc; /* 邊框 */
+  border-radius: 4px; /* 圓角 */
+  background-color: #fff; /* 背景顏色 */
+  color: #333; /* 文字顏色 */
 
+  /* 移除預設樣式 */
+  appearance: none; /* 移除瀏覽器預設樣式 */
+  -webkit-appearance: none; /* 兼容 Webkit 瀏覽器（如 Chrome、Safari） */
+  -moz-appearance: none; /* 兼容 Firefox */
+}
+
+
+//動畫效果
+@keyframes rotate {
+     from {
+      transform: rotate(0deg);
+      scale: 1;
+     } 
+     to {
+      transform: rotate(180deg);
+      scale: 1.08;
+     }
+    }
+
+@keyframes opacity {
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
-// Adoption Page: animal cards
-.animal-cards-container{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); // 每張卡片最小 250px，自動適應
-  gap: 20px; // 卡片之間的間距
-  padding: 5rem;
-  .animal-card{
-    position: relative;
-    max-width: 20vw;
-    min-width: 200px;
-    .animal-image-container{
-      width: 100%;
-      height: 18rem;
-      background-color: $pink-color;
-      border-radius: 28px;
-      overflow: hidden;
-      border: 1rem solid $pink-color;
-      img{
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-      }
-    }
-    h2{
-      background-color: $pink-color;
-      padding: 0.5rem;
-      text-align: center;
-      color: $orange-color;
-      border-radius: 2rem;
-      font-size: 1.2rem;
-      width: 60%;
-      position: absolute;
-      bottom: 9rem;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .animal-info-container{
-      background-color: $light-blue-color;
-      border-radius: 28px;
-      padding: 10px;
-      color: #fff;
-      font-weight: 500;
-      text-align: center;
-    }
-  }
-}
+//引入其他分頁
+@import 'adoption'
