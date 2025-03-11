@@ -123,6 +123,10 @@ const FilterForm = () => {
             fill="#FBE3D7"
           />
         </svg>
+        {/* 搜尋按鈕 */}
+        <button className="main-btn search-btn" onClick={handleSearch}>
+          開始尋找
+        </button>
       </div>
       {/* 品種篩選 */}
       <div className="filter-container">
@@ -170,10 +174,6 @@ const FilterForm = () => {
             />
           ))}
       </div>
-      {/* 搜尋按鈕 */}
-      <button className="main-btn" onClick={handleSearch}>
-        開始尋找
-      </button>
     </div>
   );
 }

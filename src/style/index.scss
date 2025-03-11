@@ -47,9 +47,8 @@ body {
   border-color: $background-color;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+h1, h2 {
+  appearance: none;
 }
 
 button {
@@ -115,16 +114,19 @@ button:focus-visible {
   justify-content: center;
   position: relative;
   z-index: 20;
+  font-size: $large-font;
    &:hover svg{
     transform: rotate(180deg);
   }
   svg {
+    width: 8vw;
     animation: 
       opacity 1s ease-in-out forwards,
       rotate 2s cubic-bezier(0.5, 0, 0.13, 1) ;
       transition: transform 2s cubic-bezier(0.5, 0, 0.13, 1); /* hover 時的平滑過渡 */
     }
   h2{
+    font-size: $large-font;
     margin: 0;
     position: absolute;
     top: 50%;
@@ -133,15 +135,21 @@ button:focus-visible {
     color: #ffffff;
   }
 }
+
+
+
 // 按鈕樣式： 
 .main-btn{
-  width: 10rem;
-  height: 3rem;
+  width: 18vw;
+  min-width: 16vw;
+  height: 8vh;
+  min-height: 6vh;
   border-radius: 30px;
   background-color: $orange-color;
   color: #fff;
   text-align: center;
-  font-size: 1.3rem;
+  font-weight: 600;
+  font-size: $large-font;
 }
 
 // HomePage: hero section
