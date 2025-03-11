@@ -11,21 +11,23 @@
   margin: 5% auto 0 auto;
   transform: translateY(-28%);
   .filter-form-bg{
-    width: 60vw;
-    margin-bottom: 2rem;
+    width: 70vw;
+    margin-bottom: 1rem;
     position: absolute;
-    top: 0;
-    left: 0;
     z-index: -1;
   }
   .filter-container{
     display: grid;
-    grid-template-columns: 300px 300px;
+    place-items:  center;
+    margin: 2.5rem 0;
+    grid-template-columns: 30vw 30vw;
     font-weight: 500;
-    font-size: 1.2rem;
+    font-size: $middle-font;
   }
 
   label{
+    display: flex;
+    align-items: center;
     padding-right: 0.5rem;
   }
 
@@ -42,7 +44,8 @@
 }
 
 .dropdown-container{
-  display: flex;
+  display: grid;
+  grid-template-columns: 8vw 15vw;
 }
 
 // Adoption Page: animal cards

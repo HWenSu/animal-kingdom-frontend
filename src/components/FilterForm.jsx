@@ -145,10 +145,13 @@ const FilterForm = () => {
           )}
           {/* 其他品種下拉式選單 */}
           <label>
-            <input type="radio" name="category" />
+            <input type="radio" name="category" className="custom-radio" />
             其他品種
           </label>
-          <select className="dropdown-container custom-select" onChange={handleSpecieChange}>
+          <select
+            className="dropdown-container custom-select"
+            onChange={handleSpecieChange}
+          >
             {hiddenSpecies.map((hiddenSpecie) => (
               <option key={hiddenSpecie.name} value={hiddenSpecie.name}>
                 {hiddenSpecie.name}
