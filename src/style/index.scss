@@ -4,7 +4,7 @@
 
 :root {
   // 字體設定
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Zen Maru Gothic", serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -187,32 +187,68 @@ button:focus-visible {
   color: $orange-color;
   cursor: pointer;
 
-
   /* 移除預設樣式 */
   appearance: none; /* 移除瀏覽器預設樣式 */
   -webkit-appearance: none; /* 兼容 Webkit 瀏覽器（如 Chrome、Safari） */
   -moz-appearance: none; /* 兼容 Firefox */
 }
+
+.custom-select:focus {
+  background-color: $orange-color;
+  color: #fff;
+}
+
+
 
 // radio input 樣式
 .custom-radio{
-  border: 2px solid $orange-color; 
-  padding: 0.5rem;
-  margin: 0 0.3rem;
-  border-radius: 50%;
-
-  /* 移除預設樣式 */
-  appearance: none; /* 移除瀏覽器預設樣式 */
-  -webkit-appearance: none; /* 兼容 Webkit 瀏覽器（如 Chrome、Safari） */
-  -moz-appearance: none; /* 兼容 Firefox */
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: $large-font;
+  gap: 0.5rem; // 控制文字與按鈕的間距
   
-  // 點選時
-  input[type="radio"] {
-    accent-color: $orange-color; /* 變更選中時的顏色 */
   }
 
+.custom-radio input[type="radio"] {
+  display: none;
 }
 
+/* 自訂 radio 外框 */
+.custom-radio .radio-mark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid $orange-color;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+}
+
+/* 選中時的效果 */
+.custom-radio input[type="radio"]:checked + .radio-mark {
+  background-color: $orange-color; /* 改變背景顏色 */
+}
+
+/* 內部圓點（選中時顯示） */
+.custom-radio .radio-mark::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* 選中時顯示內部圓點 */
+.custom-radio input[type="radio"]:checked + .radio-mark::after {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.3s ease-in-out;
+}
 
 //動畫效果
 @keyframes rotate {
@@ -236,4 +272,5 @@ button:focus-visible {
 }
 
 //引入其他分頁
-@import 'adoption'
+@import 'adoption';
+@import 'info'

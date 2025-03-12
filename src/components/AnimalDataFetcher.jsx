@@ -12,7 +12,7 @@ const AnimalDataFetcher = ({url, children,fallback}) => {
       try{
         setIsLoading(true)
         //測試假資料
-        const response = await fetch("/data/animalShelterData.json")
+        const response = await fetch(url)
         if(!response.ok){
           throw new Error (`HTTP error! status: ${response.status}`)
         }

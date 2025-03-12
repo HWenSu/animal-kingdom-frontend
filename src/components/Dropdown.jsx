@@ -4,6 +4,7 @@ const Dropdown = ({ label, options, onChange}) => {
   const hasCityId = options.some(option => option.cityId)
   const filteredOptions = options.filter(option => option.cityId === 1)
   const [selectedCity, setSelectedCity] = useState(null)
+  
   const handleCityChange = (e)=> {
    setSelectedCity(e.target.value)
   }
@@ -23,7 +24,7 @@ const Dropdown = ({ label, options, onChange}) => {
           <label>{label}</label>
           <div className="dropdown">
             {options && (
-              <div>
+              <div className='select-container'>
                 {/* 選擇來源城市 */}
                 <select
                   className="custom-select"
