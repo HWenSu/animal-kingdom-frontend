@@ -136,8 +136,6 @@ button:focus-visible {
   }
 }
 
-
-
 // 按鈕樣式： 
 .main-btn{
   width: 18vw;
@@ -166,13 +164,17 @@ button:focus-visible {
   .hero-action{
     position: absolute;
     place-items: center;
-    right: 10%;
-    top: 50%;
+    right: 10rem;
+    top: 12rem;
   }
   h1{
     font-size: 1.5rem;
     padding-bottom: 10px;
   }
+}
+.home-page-top{
+  position: absolute;
+  inset: 0;
 }
 
 //下拉選單select 樣式
@@ -273,4 +275,5 @@ button:focus-visible {
 
 //引入其他分頁
 @import 'adoption';
-@import 'info'
+@import 'animal';
+@import 'categoryCard';

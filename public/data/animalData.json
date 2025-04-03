@@ -1,5 +1,5 @@
 {
-    "album_file": "https://www.pet.gov.tw/upload/pic/1741063111914.png",
+    "album_file": ["https://www.pet.gov.tw/upload/pic/1741063111914.png","https://www.pet.gov.tw/upload/pic/1741063111914.png","https://www.pet.gov.tw/upload/pic/1741063111914.png"],
       "album_update": "",
       "animal_age": "CHILD",
       "animal_area_pkid": 7,

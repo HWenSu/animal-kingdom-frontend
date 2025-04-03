@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'; // 導入 PropTypes
 const AnimalDataFetcher = ({url, children,fallback}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
-  const [data, setData] = useState(null)
+  const [data, setData] = useState([])
 
 
   useEffect(()=>{

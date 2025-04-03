@@ -64,16 +64,15 @@
 .animal-cards-container{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); // 每張卡片最小 250px，自動適應
-  gap: 20px; // 卡片之間的間距
+  gap: 40px; // 卡片之間的間距
   padding: 0 5rem;
   .animal-card{
     position: relative;
-    max-width: 20vw;
     min-width: 200px;
     cursor: pointer;
     .animal-image-container{
       width: 100%;
-      height: 18rem;
+      height: 16rem;
       background-color: $pink-color;
       border-radius: 28px;
       overflow: hidden;
@@ -87,16 +86,20 @@
     }
     h2{
       background-color: $pink-color;
-      padding: 0.5rem;
+      padding: 0 0.5rem;
       text-align: center;
       color: $orange-color;
-      border-radius: 2rem;
+      border-radius: 3rem;
       font-size: $middle-font;
-      width: 70%;
-      height: 15%;
+      width: 16rem;
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: absolute;
-      bottom: 9rem;
+      top: 12rem;
       left: 50%;
+      text-align: center;
       transform: translateX(-50%);
     }
     .animal-info-container{
