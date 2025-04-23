@@ -2,6 +2,10 @@
 // 引入全局變數
 @import './variables';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   // 字體設定
   font-family: "Zen Maru Gothic", serif;
@@ -250,6 +254,28 @@ button:focus-visible {
   opacity: 1;
   transform: scale(1);
   transition: all 0.3s ease-in-out;
+}
+
+
+// 分頁器
+.pagination-wrap {
+      a{
+        color: $light-blue-color;
+        font-size: 1.2rem;
+        width: 2rem;
+        height: 2rem;
+        cursor: pointer;
+        &:hover {
+          color: darken( $light-blue-color, 10%);
+        }
+        &.active{
+          color: $pink-color;
+          background-color: $orange-color;
+          border-radius: 50%;
+          text-align: center;
+          
+        }
+  }
 }
 
 //動畫效果
