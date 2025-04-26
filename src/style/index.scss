@@ -2,15 +2,13 @@
 // 引入全局變數
 @import './variables';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 :root {
   // 字體設定
   font-family: "Zen Maru Gothic", serif;
   line-height: 1.5;
   font-weight: 400;
+  font-size: $font-md;
 
   // 顏色方案與基礎配色
   color-scheme: light dark;
@@ -22,6 +20,9 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  width: 100vw;
+  overflow-x: hidden;
 }
 
 * {
@@ -36,6 +37,7 @@ a {
   font-weight: 500;
   color: #fff;
   text-decoration: inherit;
+  font-size: $font-sm;
 }
 a:hover {
   color: $orange-color;
@@ -112,13 +114,36 @@ button:focus-visible {
   }
 }
 
+// 元件樣式： Footer
+.footer-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 10rem;
+
+  .footer-bg {
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    bottom: 0;
+  }
+  h2 {
+    position: absolute;
+    bottom: 2rem;
+    color: #fff;
+    font-size: $font-md;
+    margin: 0;
+  }
+}
+
 // 元件樣式： flower-h2
 .flower-h2{
   display: flex;
   justify-content: center;
   position: relative;
   z-index: 20;
-  font-size: $large-font;
+  font-size: $font-lg;
    &:hover svg{
     transform: rotate(180deg);
   }
@@ -130,7 +155,7 @@ button:focus-visible {
       transition: transform 2s cubic-bezier(0.5, 0, 0.13, 1); /* hover 時的平滑過渡 */
     }
   h2{
-    font-size: $large-font;
+    font-size: $font-lg;
     margin: 0;
     position: absolute;
     top: 50%;
@@ -142,19 +167,40 @@ button:focus-visible {
 
 // 按鈕樣式： 
 .main-btn{
-  width: 18vw;
-  min-width: 16vw;
-  height: 8vh;
-  min-height: 6vh;
+  width: 8rem;
+  height: 4rem;
   border-radius: 30px;
   background-color: $orange-color;
   color: #fff;
   text-align: center;
   font-weight: 600;
-  font-size: $large-font;
+  font-size: $font-lg;
+  margin: 2rem;
+  transition: all 0.3s ease-in-out;
+
+  &:hover{
+    scale: 1.05;
+    background-color: darken($color: $orange-color, $amount: 5);
+    color: $pink-color;
+  }
+}
+
+.cancel-btn{
+  background-color: darken($color: $pink-color, $amount: 5);
+  color: $orange-color;
+    &:hover{
+    background-color: darken($color: $pink-color, $amount: 10);
+    color: #fff;
+  }
+
 }
 
 // HomePage: hero section
+
+.home-page-container{
+  min-height: 100vh;
+}
+
 .hero-section{
   position: relative;
   .hero-wave{
@@ -186,7 +232,7 @@ button:focus-visible {
   text-align: center;
   padding: 8px 12px;
   margin: 0 0.3rem;
-  font-size: $middle-font; 
+  font-size: $font-md; 
   border: 2px solid $orange-color; 
   border-radius: 30px; 
   background-color: transparent; 
@@ -211,7 +257,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   cursor: pointer;
-  font-size: $large-font;
+  font-size: $font-lg;
   gap: 0.5rem; // 控制文字與按鈕的間距
   
   }
@@ -273,7 +319,6 @@ button:focus-visible {
           background-color: $orange-color;
           border-radius: 50%;
           text-align: center;
-          
         }
   }
 }

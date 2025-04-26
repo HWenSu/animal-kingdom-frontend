@@ -5,7 +5,7 @@ import AnimalDataFetcher from '../components/AnimalDataFetcher';
 
 const HomePage = () => {
   return (
-    <div>
+    <div className='home-page-container'>
       {/* Hero section */}
       <section className="hero-section home-page-top">
         {/* Hero section: 背景圖片和主標 */}

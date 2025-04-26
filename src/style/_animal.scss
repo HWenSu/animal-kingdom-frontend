@@ -1,45 +1,80 @@
 .animal-page-container{
   display: flex;
-  width: 100vw;
-  padding: 2rem 4rem ;
+  width: 100%;
+  padding: 2rem;
 }
+
+.content-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.media-container {
+  // flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+// 資訊區塊
 
 .info-container{
+  flex: 1;
   position: relative;
-  width:40vw ;
-  margin: 20vh auto ;
-  .info-bg{
-  width: 70vw;
+  max-width: 600px;
+  margin: 2rem auto ;
+  background-color: $pink-color;
+  overflow: hidden;
+  border-radius: 25px;
+  padding: 4rem;
+
+// .wavy-background  { 
+//   background-image: url('../assets/cookieBg.svg'); 
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   background-position: center;
+//   min-height: 400px; /*  給一個固定高度 */
+//   // aspect-ratio: 3 / 1; /* 寬3高1的比例 */
+//   transform: rotate(90deg);
+// }
+
+
+
+  .info-content{
   position: absolute;
-  top: 12rem;
-  left: -15rem;
-  rotate: 90deg;
-  z-index: -1;
-  }
-  .info-form-wrap{
-    position: absolute;
-    display: grid;
-    align-items: center;
-    z-index: 10;
-    left: 7rem;
-    font-size: 1.1rem;
+  display: grid;
+  align-items: center;
+  z-index: 10;
+  padding: 1rem;
+  font-size: $font-sm;
+  // transform: rotate(270deg);
+    button{
+      margin-left: 0;
+    }
   }
 }
 
-//側邊輪播圖
-
+//圖片輪播圖
 .carousel-container {
-  width: 40vw;
-  margin: 3rem auto  ;  
+  width: 100%;
+  max-width: 450px;
+  margin: 2rem auto;
 }
 
 .slick-slider{
-  width: 35rem;
+ width: 100%;
+ overflow: hidden;
 }
 
 .slick-list{
-  height: 35rem;
-  padding-top: 50px !important ;
+  height: 400px;
+  padding-top: 50px;
+  overflow: hidden; /* 確保裁剪超出部分 */
+
 }
 
 
@@ -47,6 +82,7 @@
   transition: transform 0.5s ease-in-out;
   opacity: 0.7;
   overflow: hidden;
+  
 }
 
 .slick-center {
@@ -66,15 +102,19 @@
   transform: scale(0.8) rotateY(-15deg);
 }
 
-// 影片嵌入
-.video-wrapper{
+/* 影片輪播 */
+.video-carousel {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.video-wrapper {
   position: relative;
-  width: 40rem;
-  height: 22.5rem;
-  margin: 0 auto ;
+  width: 100%;
+  padding-top: 56.25%; /* 保持 16:9 比例 */
   border-radius: 2rem;
   overflow: hidden;
-  // padding-top: 56.25%; /* 保持 16:9 比例 */
 }
 
 .video-wrapper .react-player {
@@ -83,4 +123,148 @@
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+/* 縮圖輪播 */
+.thumbnail-slider {
+  margin-top: 1rem
+}
+
+.thumbnail-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.thumbnail-item img {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: opacity 0.3s;
+}
+
+.thumbnail-item img:hover {
+  opacity: 0.8;
+}
+
+// /* 響應式設計 */
+// @media (max-width: 1024px) {
+//   .content-wrapper {
+//     flex-direction: column;
+//     align-items: center;
+//   }
+
+//   .media-container,
+//   .info-container {
+//     max-width: 100%;
+//   }
+
+//   .slick-list {
+//     height: 300px;
+//   }
+
+//   .info-bg {
+//     top: 6rem;
+//     left: -5rem;
+//     max-width: 400px;
+//   }
+// }
+
+// @media (max-width: 768px) {
+//   .animal-page-container {
+//     padding: 1rem;
+//   }
+
+//   .carousel-container,
+//   .video-carousel {
+//     max-width: 100%;
+//   }
+
+//   .slick-list {
+//     height: 250px;
+//   }
+
+//   .info-form-wrap {
+//     font-size: 1rem;
+//     padding: 0.5rem;
+//   }
+
+//   .info-bg {
+//     display: none; /* 小螢幕隱藏背景圖 */
+//   }
+// }
+
+// @media (max-width: 480px) {
+//   .slick-list {
+//     height: 200px;
+//   }
+
+//   .thumbnail-item img {
+//     height: 60px;
+//   }
+
+//   .info-form-wrap {
+//     font-size: 0.9rem;
+//   }
+// }
+
+// 領養申請表單 Adoption form
+.adoption-form-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 40rem;
+  border-radius: 25px;
+  margin: 4rem auto;
+  padding: 2rem 0;
+  background-color:  lighten($color: $light-blue-color, $amount: 5);
+}
+
+.adoption-form{
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  label{
+    padding: 0.5rem 0;
+    display: block;
+  }
+  input, textarea{
+    width: 18rem;
+    height: 2rem;
+    background-color: $pink-color;
+    border: none;
+    border-radius: 25px;
+    color: $orange-color;
+    font-weight: 500;
+    padding: 1rem;
+    outline: none; /* 先取消預設藍色外框 */
+    &:focus{
+     border: 2px solid $orange-color; /* 點到時的邊框（變色/變粗） */
+    background-color: lighten($color: $pink-color, $amount: 2);
+    }
+  }
+  textarea {
+  min-height: 10rem;
+  resize: none;
+
+  // 滾動條軌道
+  &::-webkit-scrollbar-track {
+    background-color: $pink-color;
+  }
+
+  // 滾動條本體（滑塊）
+  &::-webkit-scrollbar-thumb {
+    background-color: $orange-color;
+    border-radius: 4px;
+  }
+
+  // 滾動條寬度
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+}
 }

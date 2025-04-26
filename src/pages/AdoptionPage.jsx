@@ -4,7 +4,7 @@ import FlowerBtn from "../components/flowerBtn"
 
 const AdoptionPage = () => {
   return (
-    <div>
+    <div className="adoption-page-container">
       <FlowerBtn />
       <FilterForm />
       <AnimalCards />

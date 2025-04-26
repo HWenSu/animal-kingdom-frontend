@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
-// <https://vitejs.dev/config/>
 export default defineConfig({
   plugins: [react()],
   server: {
@@ -11,6 +10,14 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
+    },
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // 可選：如果有全局 SCSS 檔案（例如變數或 mixins），在此引入
+        additionalData: `@import "@/style/variables.scss";`,
+      },
     },
   },
 });

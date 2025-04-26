@@ -6,5 +6,8 @@ $dark-green-color: #2B4C31;
 $background-color: #fffffc;
 
 //字體
-$large-font: clamp(16px, 1.8vw, 21px);
-$middle-font: clamp(14px, 1.5vw, 19px);
+$font-xs: clamp(0.75rem, 1vw, 0.8rem);    // 小字
+$font-sm: clamp(0.9rem, 1.2vw, 1rem);  // 內文
+$font-md: clamp(1rem, 1.5vw, 1.1rem);  // 小標
+$font-lg: clamp(1.1rem, 1.7vw, 1.2rem);     // 大標
+$font-xl: clamp(2rem, 4vw, 3rem);       // Hero 字體

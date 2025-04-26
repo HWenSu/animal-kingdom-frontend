@@ -1,16 +1,27 @@
 @import './variables';
 
+.adoption-page-container{
+  max-width: 1280px;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  margin: 0 auto;
+}
+
 // Adoption Page: filter form
 .filter-form-container{
   display: flex;
   position: relative;
   flex-direction: column;
   align-items: center;
-  margin: 5vw auto;
-  width: 60vw;
+  margin: 4rem auto;
+  width: 60%;
   transform: translateY(-28%);
+
   .filter-form-bg{
-    width: 70vw;
+    width: 100%;
+    height: 100%;
     margin-bottom: 1rem;
     position: absolute;
     z-index: -1;
@@ -18,10 +29,15 @@
   .filter-container{
     display: grid;
     place-items:  center;
-    margin: 7vh 0;
+    margin: 2rem 0;
     grid-template-columns: 30vw 30vw;
     font-weight: 500;
-    font-size: $middle-font;
+    font-size: $font-sm;
+    
+    @media (max-width: 768px) { 
+      grid-template-columns: 1fr; // 小螢幕變成單欄排列
+      width: 100%;
+    }
   }
 
   label{
@@ -37,13 +53,27 @@
     justify-content: center;
     align-items: center;
     color: $orange-color;
+  @media (max-width: 768px) {
+    grid-column: 1; // 手機版只用一欄，回到正常 flow
+  }
+
     select{
       width: 5vw;
       min-width: 3rem;
       height: 6.5vh;
       padding: 0;
+
+     @media (max-width: 768px) {
+        width: 40vw; // select 寬度在手機上變大一點，避免太小
+      }
     }
+
+      @media (max-width: 768px) {
+    width: 90vw; // 整個 filter-form 在手機上變寬一點
+    transform: translateY(0); // 手機上不要位移太誇張
+    margin: 2rem auto;
   }
+}
 }
 
 .dropdown-container{
@@ -53,8 +83,8 @@
 }
 
 .search-btn{
-  position: absolute;
-  bottom: -1rem;
+  position: relative;
+  bottom: 3rem;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -90,7 +120,7 @@
       text-align: center;
       color: $orange-color;
       border-radius: 3rem;
-      font-size: $middle-font;
+      font-size: $font-md;
       width: 16rem;
       height: 4rem;
       display: flex;
