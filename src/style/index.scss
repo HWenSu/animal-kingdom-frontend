@@ -148,6 +148,7 @@ button:focus-visible {
     transform: rotate(180deg);
   }
   svg {
+    fill:$light-blue-color;
     width: 8vw;
     animation: 
       opacity 1s ease-in-out forwards,
@@ -184,6 +185,26 @@ button:focus-visible {
     color: $pink-color;
   }
 }
+
+.green-btn {
+  background-color: $light-green-color;
+  color: $dark-green-color;
+  &:hover{
+    background-color: lighten($color: $dark-green-color, $amount: 5);
+    color: #fff;
+  }
+}
+
+.blue-btn {
+  background-color: $light-blue-color;
+  color: #fff;
+  &:hover{
+    background-color: darken($color: $light-blue-color, $amount: 5);
+    color: #fff;
+  }
+}
+
+
 
 .cancel-btn{
   background-color: darken($color: $pink-color, $amount: 5);
@@ -348,3 +369,4 @@ button:focus-visible {
 @import 'adoption';
 @import 'animal';
 @import 'categoryCard';
+@import 'compare'

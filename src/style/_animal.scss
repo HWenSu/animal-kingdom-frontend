@@ -42,8 +42,6 @@
 //   transform: rotate(90deg);
 // }
 
-
-
   .info-content{
   position: absolute;
   display: grid;
@@ -52,9 +50,30 @@
   padding: 1rem;
   font-size: $font-sm;
   // transform: rotate(270deg);
-    button{
-      margin-left: 0;
+  }
+
+  .flower-h2{
+    margin-top: 3rem;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    svg {
+    fill: $light-green-color;
     }
+    &:hover {
+      scale: 1.1;
+      svg {
+        fill: darken($color: $light-green-color, $amount: 5);
+      }
+    }
+  }
+}
+
+.info-card-btn-wrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    margin: 2rem 1rem ;
   }
 }
 

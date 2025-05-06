@@ -5,6 +5,9 @@ export function usePagination({totalItems, currentPage, itemsPerPage, siblingCou
   const totalPages = Math.ceil(totalItems/itemsPerPage)
 
   const paginationRange = useMemo(() => {
+    // 若資料尚未準備好
+    if (!totalItems || !itemsPerPage) return [];
+
     const totalPageNumbers = siblingCount * 2 + 5;
 
     //如果總頁數 <= 7，直接顯示所有頁碼
@@ -27,29 +30,29 @@ export function usePagination({totalItems, currentPage, itemsPerPage, siblingCou
     const lastPageIndex = totalPages;
 
     //[1] [2] [3] [4] ... [最後一頁]
-    if (!showLeftDots && showLeftDots) {
+    if (!showLeftDots && showRightDots) {
       const leftItemCount = 3 + 2 * siblingCount;
-      const leftRange = Array.form({ length: leftItemCount }, (_, i) => i + 1);
+      const leftRange = Array.from({ length: leftItemCount }, (_, i) => i + 1);
       return [...leftRange, Dots, lastPageIndex];
     }
 
     //[1] ... [8] [9] [10] [最後一頁]
-    if ((showLeftDots, !showRightDots)) {
+    if (showLeftDots && !showRightDots) {
       const rightItemCount = 3 + 2 * siblingCount;
-      const rightRange = Array.form(
+      const rightRange = Array.from(
         { length: rightItemCount },
-        (_, i) => i + 1
+        (_, i) => totalPages - (3 + 2 * siblingCount) + 1 + i
       );
       return [firstPageIndex, Dots, ...rightRange];
     }
 
     //	[1 ... 4 5 6 ... 10]
     if (showLeftDots && showRightDots) {
-      const middleRange = Array.form(
+      const middleRange = Array.from(
         { length: rightSiblingIndex - leftSiblingIndex + 1 },
         (_, i) => leftSiblingIndex + i
       );
-      return [firstPageIndex, Dots, middleRange, Dots, lastPageIndex];
+      return [firstPageIndex, Dots, ...middleRange, Dots, lastPageIndex];
     }
   }, [totalItems, currentPage, itemsPerPage, siblingCount]);
 
@@ -57,6 +60,4 @@ export function usePagination({totalItems, currentPage, itemsPerPage, siblingCou
     paginationRange,
     totalPages,
   };
-
-
 }

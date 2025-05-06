@@ -1,0 +1,18 @@
+.compare-page-container{
+  max-width: 1280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+margin: 0 auto;
+  .cards-grid-wrap{
+    background-color: $pink-color;
+    width: 100%;
+    min-height: 100vh;
+    margin: 5rem 8rem;
+    border-radius: 2rem;
+    display: grid;
+    grid-template-columns: 3;
+  }
+
+}

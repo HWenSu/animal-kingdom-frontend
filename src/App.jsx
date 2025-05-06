@@ -5,6 +5,7 @@ import PostPage from './pages/PostPage';
 import LostPage from './pages/LostPage';
 import AnimalPage from './pages/AnimalPage';
 import AdoptionForm from './pages/AdoptionForm'
+import CompareList from './pages/CompareList';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
       <Route path="/post" element={<PostPage />} />
       <Route path="/lost" element={<LostPage />} />
       <Route path="/adoption-form/:id" element={<AdoptionForm />} />
+      <Route path="/compare-list" element={<CompareList />} />
     </Routes>
   );
 }

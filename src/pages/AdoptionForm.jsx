@@ -115,7 +115,7 @@ const AdoptionForm = () => {
           <button
             className="main-btn cancel-btn"
             type="button"
-            onClick={() => navigate(`/animal/${id}`)}
+            onClick={() => navigate(`/adoption/${id}`)}
           >
             取消
           </button>

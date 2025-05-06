@@ -14,11 +14,12 @@ const AnimalCards = () => {
   const navigate = useNavigate();
   const [animals, setAnimals] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12;
+  const [itemsPerPage, setItemsPerPage] = useState(null)
+  const [totalItems, setTotalItems] = useState(null);
 
   // 分頁邏輯
   const { paginationRange, totalPages } = usePagination({
-    totalItems: animals.length,
+    totalItems,
     currentPage,
     itemsPerPage,
     siblingCount: 1,
@@ -32,9 +33,13 @@ const AnimalCards = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("/data/animalShelterData.json");
+        const res = await fetch(
+          `http://localhost:8080/animal?page=${currentPage}`
+        );
         const data = await res.json();
-        setAnimals(data);
+        setAnimals(data.data);
+        setItemsPerPage(data.pagination.limit);
+        setTotalItems(data.pagination.total);
       } catch (err) {
         console.error("載入動物資料失敗", err);
       }
@@ -43,26 +48,29 @@ const AnimalCards = () => {
   }, []);
 
   // 當前頁資料
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentAnimals = animals.slice(startIndex, startIndex + itemsPerPage);
+  // const startIndex = (currentPage - 1) * itemsPerPage;
+  // const currentAnimals = animals.slice(startIndex, startIndex + itemsPerPage);
+
+  console.log(animals)
 
   return (
     <div>
       <ul className="animal-cards-container">
-        {currentAnimals.map((animal) => (
+        {animals.map((animal) => (
           <li
-            key={animal.animal_id}
+            key={animal.id}
             className="animal-card"
-            onClick={() => navigate(`/adoption/${animal.animal_id}`)}
+            onClick={() => navigate(`/adoption/${animal.id}`)}
           >
             <div className="animal-image-container">
-              <img src={animal.album_file} alt={animal.animal_variety} />
+              <img src={animal.album_file} alt={animal.variety} />
             </div>
             <h2>{animal.shelter_name}</h2>
             <div className="animal-info-container">
-              <p>{animal.animal_kind}</p>
+              <p>{animal.kind}</p>
+              <p>{animal.sex}</p>
               <p>{animal.shelter_address}</p>
-              <p>{animal.animal_age}</p>
+              <p>{animal.age}</p>
             </div>
           </li>
         ))}
