@@ -6,6 +6,7 @@ import LostPage from './pages/LostPage';
 import AnimalPage from './pages/AnimalPage';
 import AdoptionForm from './pages/AdoptionForm'
 import CompareList from './pages/CompareList';
+import User from './pages/User' 
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
       <Route path="/lost" element={<LostPage />} />
       <Route path="/adoption-form/:id" element={<AdoptionForm />} />
       <Route path="/compare-list" element={<CompareList />} />
+      <Route path="/user" element={<User />} />
     </Routes>
   );
 }
