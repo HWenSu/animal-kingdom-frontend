@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchAnimalsApi } from "../lib/api";
 import { usePagination } from "./Pagination";
 import {
   Pagination,
@@ -17,6 +18,7 @@ const AnimalCards = () => {
   const [itemsPerPage, setItemsPerPage] = useState(null)
   const [totalItems, setTotalItems] = useState(null);
 
+
   // 分頁邏輯
   const { paginationRange, totalPages } = usePagination({
     totalItems,
@@ -30,50 +32,52 @@ const AnimalCards = () => {
   };
 
   // 取得資料
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(
-          `http://localhost:8080/animal?page=${currentPage}`
-        );
-        const data = await res.json();
-        setAnimals(data.data);
-        setItemsPerPage(data.pagination.limit);
-        setTotalItems(data.pagination.total);
-      } catch (err) {
-        console.error("載入動物資料失敗", err);
-      }
-    };
-    fetchData();
-  }, []);
+ useEffect(()=> {
+  const getData = async () => {
+    try {
+      const data = await fetchAnimalsApi({currentPage});
+      setAnimals(data.data)
+      setItemsPerPage(data.pagination.limit); 
+      setTotalItems(data.pagination.total);
+    } catch (err) {
+      console.error(err)
+    }
+  }
+  getData()
+ }, [currentPage])
+
+ console.log(animals)
+
 
   // 當前頁資料
   // const startIndex = (currentPage - 1) * itemsPerPage;
   // const currentAnimals = animals.slice(startIndex, startIndex + itemsPerPage);
 
-  console.log(animals)
-
   return (
     <div>
       <ul className="animal-cards-container">
-        {animals.map((animal) => (
-          <li
-            key={animal.id}
-            className="animal-card"
-            onClick={() => navigate(`/adoption/${animal.id}`)}
-          >
-            <div className="animal-image-container">
-              <img src={animal.album_file} alt={animal.variety} />
-            </div>
-            <h2>{animal.shelter_name}</h2>
-            <div className="animal-info-container">
-              <p>{animal.kind}</p>
-              <p>{animal.sex}</p>
-              <p>{animal.shelter_address}</p>
-              <p>{animal.age}</p>
-            </div>
-          </li>
-        ))}
+        {animals.map((animal) => {
+          const images = animal.resources.filter((resource) => resource.type === 1)          
+          const firstImage = images[0].url
+          return (
+            <li
+              key={animal.id}
+              className="animal-card"
+              onClick={() => navigate(`/adoption/${animal.id}`)}
+            >
+              <div className="animal-image-container">
+                <img src={firstImage} alt={animal.variety} />
+              </div>
+              <h2>{animal.shelter_name}</h2>
+              <div className="animal-info-container">
+                <p>{animal.kind}</p>
+                <p>{animal.sex}</p>
+                <p>{animal.shelter_address}</p>
+                <p>{animal.age}</p>
+              </div>
+            </li>
+          );
+        })}
       </ul>
 
       {/* 分頁器 */}

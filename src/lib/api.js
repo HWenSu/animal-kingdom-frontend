@@ -1,6 +1,15 @@
+const baseUrl = "http://localhost:8080";
 
-export async function userAuthApi ({ e, url, username, password, errMessage, onSuccess }) {
-  e.preventDefault()
+// 登入或註冊通用函式 post
+export async function userAuthApi({
+  e,
+  url,
+  username,
+  password,
+  errMessage,
+  onSuccess,
+}) {
+  e.preventDefault();
 
   try {
     const res = await fetch(url, {
@@ -10,7 +19,6 @@ export async function userAuthApi ({ e, url, username, password, errMessage, onS
       body: JSON.stringify({ username, password }),
     });
     const data = await res.json();
-    console.log("後端回傳內容：", data); // <-- 加這一行
     if (!res.ok) {
       throw new Error(data.message || errMessage);
     }
@@ -22,4 +30,36 @@ export async function userAuthApi ({ e, url, username, password, errMessage, onS
   }
 }
 
-// feedback 登入成功或登入失敗
+// 獲取動物列表資料 api
+export async function fetchAnimalsApi({currentPage}) {
+  try {
+    const res = await fetch(`${baseUrl}/animal?page=${currentPage}`);
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "動物資料載入錯誤");
+    }
+    // 回傳整包資料
+    return data;
+  } catch (err) {
+    console.error("獲取資料錯誤：", err);
+    throw err;
+  }
+}
+
+// 獲取單一動物資料 api
+
+export async function fetchAnimalApi({ id }) {
+  try {
+    const res = await fetch(`${baseUrl}/animal/${id}`);
+    console.log(`${baseUrl}/animal/${id}`);
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "動物資料載入錯誤");
+    }
+    // 回傳整包資料
+    return data;
+  } catch (err) {
+    console.error("獲取資料錯誤：", err);
+    throw err;
+  }
+}

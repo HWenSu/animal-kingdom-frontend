@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import InfoText from "@/components/InfoText";
+import { fetchAnimalApi } from "../lib/api";
 
 const AdoptionForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const [adoptAnimal, setAdoptAnimal] = useState([])
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,7 +16,26 @@ const AdoptionForm = () => {
     occupation: "",
     reason: "",
   });
+
   const [error, setError] = useState("");
+
+  useEffect(()=> {
+    if (id) {
+      const getAnimalData = async () => {
+        try {
+          const animalData = await fetchAnimalApi({id}); // 儲存 API 回傳的資料
+          setAdoptAnimal(animalData);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getAnimalData(); // 執行函數
+    }
+  }
+  , [id])
+
+  console.log(id)
+  console.log(adoptAnimal)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,85 +66,88 @@ const AdoptionForm = () => {
   };
 
   return (
-    <div className="adoption-form-container">
-      <h2>領養申請表單</h2>
-      {error && <div className="">{error}</div>}
+    <div className="adoption-wrap">
+      <InfoText data={adoptAnimal} />
+      <div className="adoption-form-container">
+        <h2>領養申請表單</h2>
+        {error && <div className="">{error}</div>}
 
-      <div onSubmit={handleSubmit} className="adoption-form">
-        <div>
-          <label>姓名 *</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <div onSubmit={handleSubmit} className="adoption-form">
+          <div>
+            <label>姓名 *</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <div>
-          <label className="">電子郵件 *</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div>
+            <label className="">電子郵件 *</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <div>
-          <label className="">電話 *</label>
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div>
+            <label className="">電話 *</label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <div>
-          <label className="">地址</label>
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-          />
-        </div>
+          <div>
+            <label className="">地址</label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div>
-          <label>職業</label>
-          <input
-            type="text"
-            name="occupation"
-            value={formData.occupation}
-            onChange={handleChange}
-          />
-        </div>
+          <div>
+            <label>職業</label>
+            <input
+              type="text"
+              name="occupation"
+              value={formData.occupation}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div>
-          <label>領養原因</label>
-          <textarea
-            name="reason"
-            value={formData.reason}
-            onChange={handleChange}
-            rows="4"
-          />
-        </div>
+          <div>
+            <label>領養原因</label>
+            <textarea
+              name="reason"
+              value={formData.reason}
+              onChange={handleChange}
+              rows="4"
+            />
+          </div>
 
-        <div>
-          <button
-            className="main-btn cancel-btn"
-            type="button"
-            onClick={() => navigate(`/adoption/${id}`)}
-          >
-            取消
-          </button>
-          <button className="main-btn" onClick={handleSubmit}>
-            提交申請
-          </button>
+          <div>
+            <button
+              className="main-btn cancel-btn"
+              type="button"
+              onClick={() => navigate(`/adoption/${id}`)}
+            >
+              取消
+            </button>
+            <button className="main-btn" onClick={handleSubmit}>
+              提交申請
+            </button>
+          </div>
         </div>
       </div>
     </div>

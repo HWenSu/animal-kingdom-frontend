@@ -98,7 +98,7 @@ button:focus-visible {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 997;
   width: 100%;
   padding: 10px 45px;
   justify-content: space-between;
@@ -166,6 +166,15 @@ button:focus-visible {
   }
 }
 
+// 圓形圖片
+.circle-image {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 100%;
+  overflow: hidden;
+  object-fit: cover;
+}
+
 // 按鈕樣式： 
 .main-btn{
   width: 8rem;
@@ -178,7 +187,7 @@ button:focus-visible {
   font-size: $font-lg;
   margin: 2rem;
   transition: all 0.3s ease-in-out;
-
+  cursor: pointer;
   &:hover{
     scale: 1.05;
     background-color: darken($color: $orange-color, $amount: 5);
@@ -343,6 +352,33 @@ button:focus-visible {
         }
   }
 }
+
+// alertPopup Modal
+.alert-overlay{
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  z-index: 998;
+  .alert-popup-container {
+  position: fixed;
+  background-color: $dark-green-color;
+  color: $pink-color;
+  top: 20vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  text-align: center;
+  border-radius: 24px;
+  padding-top: 2rem;
+    .alert-btn-container{
+      display: flex;
+  }
+}
+}
+
 
 //動畫效果
 @keyframes rotate {

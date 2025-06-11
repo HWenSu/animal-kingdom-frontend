@@ -228,6 +228,21 @@
 // }
 
 // 領養申請表單 Adoption form
+.adoption-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  gap: 4rem;
+  margin: 4rem 0;
+  .info-text-warp {
+    background: $pink-color;
+    border-radius: 25px;
+    padding: 2rem;
+    max-width: 24rem;
+  }
+}
+
+
 .adoption-form-container{
   display: flex;
   flex-direction: column;
@@ -235,8 +250,6 @@
   align-items: center;
   max-width: 40rem;
   border-radius: 25px;
-  margin: 4rem auto;
-  padding: 2rem 0;
   background-color:  lighten($color: $light-blue-color, $amount: 5);
 }
 

@@ -5,14 +5,51 @@
   align-items: center;
   min-height: 100vh;
 margin: 0 auto;
-  .cards-grid-wrap{
+  .cards-table-wrap{
     background-color: $pink-color;
     width: 100%;
     min-height: 100vh;
     margin: 5rem 8rem;
     border-radius: 2rem;
-    display: grid;
-    grid-template-columns: 3;
+    padding: 2rem 4rem;
+  }
+
+  .table-container{
+    position: relative;
+  }
+
+  .table{
+    padding: 2rem 0 ;
+    border-spacing: 0;
+    border-collapse: separate;
+    text-align: center;
+  }
+
+  .table-row{
+    width: 100%;
+    &:hover {
+      background-color: darken($color: $pink-color, $amount: 2);
+    } 
+  }
+
+  .table-caption{
+    font-size: 1.3rem;
+   margin-bottom: 1rem;
+   font-weight: 700;
+   color: $orange-color;
+  }
+
+  .table-cell{
+    white-space: normal; // 允許自動換行
+    word-break: break-word; // 長字元也能換行
+    min-width: 12rem;
+    font-size: 0.9rem;
+    border-bottom: 2px solid darken($color: $pink-color, $amount: 10);
+    padding: 0.5rem;
+  }
+
+  .table-head {
+  padding-left: 0.5rem;
   }
 
 }
