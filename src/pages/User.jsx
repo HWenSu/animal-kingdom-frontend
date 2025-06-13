@@ -1,40 +1,28 @@
-import Login from "../components/Login.jsx"
-import Register from "../components/Register.jsx"
 import {useState} from "react"
+import { useAuth } from "@/context/AuthContext.jsx"
+import { Link } from "react-router-dom"
+import Login from "@/components/Login"
+import Admin from "@/components/Admin"
 
 const User = () => {
-  const [showRegister, setShowRegister] = useState(false)
-
-  const handleShowRegister = () => {
-    setShowRegister(!showRegister)
-  }
+  const { token, logout } = useAuth()
 
   return (
-    <div className="login-page-container">
-      {showRegister ? (
-        <div>
-          <Register />
-          <div className="flex justify-center items-center">
-            <p>已經註冊過了?</p>
-            <button
-              className="main-btn blue-btn scale-75"
-              onClick={handleShowRegister}
-            >
-              返回登入
-            </button>
-          </div>
-        </div>
+    <div>
+      {token ? (
+        // 如果 token 存在 (已登入狀態)
+        <>
+          <Admin/>
+        </>
       ) : (
-        <div>
+        // 如果 token 為 null (未登入狀態)
+        <div className="login-page-container">
           <Login />
           <div className="flex justify-center items-center">
             <p>還沒有帳號嗎?</p>
-            <button
-              className="main-btn blue-btn scale-75"
-              onClick={handleShowRegister}
-            >
-              開始註冊
-            </button>
+            <Link to="/create-account">
+              <button className="main-btn blue-btn scale-75">開始註冊</button>
+            </Link>
           </div>
         </div>
       )}

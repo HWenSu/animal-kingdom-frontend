@@ -214,8 +214,6 @@ button:focus-visible {
   }
 }
 
-
-
 .cancel-btn{
   background-color: darken($color: $pink-color, $amount: 5);
   color: $orange-color;
@@ -407,4 +405,5 @@ button:focus-visible {
 @import 'animal';
 @import 'categoryCard';
 @import 'compare';
-@import 'user'
+@import 'user';
+@import 'admin';

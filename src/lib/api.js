@@ -2,31 +2,33 @@ const baseUrl = "http://localhost:8080";
 
 // 登入或註冊通用函式 post
 export async function userAuthApi({
-  e,
   url,
-  username,
-  password,
-  errMessage,
-  onSuccess,
+  body,
 }) {
-  e.preventDefault();
 
   try {
     const res = await fetch(url, {
       method: "POST",
       // 設定送出的資料格式
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify(body),
     });
     const data = await res.json();
     if (!res.ok) {
-      throw new Error(data.message || errMessage);
+      const error = new Error(
+        // 優先使用後端回傳的錯誤訊息
+        data.error || data.message || "API請求失敗"
+      );
+      error.response = {
+        data: data, // data 就是 { error: "帳號已被使用" }
+        status: res.status,
+      };
+      throw error
     }
-    // 成功時由外部決定要做什麼
-    onSuccess(data);
+    return data;
   } catch (err) {
-    console.error("登入錯誤：", err);
-    alert(err.message);
+    // 這裡的 catch 主要捕捉網路錯誤或 JSON 解析錯誤
+    throw err;
   }
 }
 
