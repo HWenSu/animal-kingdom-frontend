@@ -79,6 +79,11 @@
 
 }
 
+.error-text {
+  color: $orange-color;
+  font-weight: 500;
+}
+
 .dropdown-container{
   display: grid;
   grid-template-columns: 10vw 15vw;

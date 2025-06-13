@@ -51,7 +51,6 @@ export async function fetchAnimalsApi({currentPage}) {
 export async function fetchAnimalApi({ id }) {
   try {
     const res = await fetch(`${baseUrl}/animal/${id}`);
-    console.log(`${baseUrl}/animal/${id}`);
     const data = await res.json();
     if (!res.ok) {
       throw new Error(data.message || "動物資料載入錯誤");

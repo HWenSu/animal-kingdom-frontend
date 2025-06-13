@@ -21,7 +21,7 @@ const InfoCard = ({data}) => {
       {data ? (
         <div className="wavy-background">
           <div className="info-content">
-            <InfoText data={data} />
+            <InfoText data={data} isShow={true}/>
             <div onClick={handleCompareListClick}>
               <FlowerBtn text={"考慮清單"} />
             </div>
@@ -29,7 +29,7 @@ const InfoCard = ({data}) => {
               <button onClick={handleAdoptClick} className="main-btn">
                 我要領養
               </button>
-              <CompareButton id={id}/>
+              <CompareButton id={id} />
             </div>
           </div>
         </div>
