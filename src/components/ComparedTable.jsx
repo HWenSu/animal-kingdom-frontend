@@ -6,8 +6,13 @@ import {
   TableHead,
   TableRow,
 } from "@/components/ui/table";
+import { useNavigate } from "react-router-dom";
+import CompareButton from "./CompareButton";
 
-const ComparedTable = ({ data }) => {
+
+const ComparedTable = ({ data, onItemRemove }) => {
+  const navigate = useNavigate();
+
   // 定義比較欄位清單
   const fields = [
     { key: "image", label: "照片" },
@@ -23,7 +28,11 @@ const ComparedTable = ({ data }) => {
     { key: "shelter_tel", label: "電話" },
   ];
 
-  console.log(data)
+  const handleAdoptClick = (id) => {
+    navigate(`/adoption-form/${id}`);
+  };
+
+  console.log(data);
 
   return (
     <div className="table-container">
@@ -44,7 +53,7 @@ const ComparedTable = ({ data }) => {
                   >
                     {field.key === "image" ? (
                       <img
-                        src={imageRes.url}
+                        src={imageRes?.url}
                         alt="animal image"
                         className="circle-image"
                       />
@@ -56,6 +65,26 @@ const ComparedTable = ({ data }) => {
               })}
             </TableRow>
           ))}
+          {/* 我要領養按鈕 */}
+          <TableRow>
+            <TableHead className="table-head font-medium"></TableHead>
+            {data?.map((item) => (
+              <TableCell key={item.id}>
+                <button
+                  onClick={() => handleAdoptClick(item.id)}
+                  className="main-btn"
+                >
+                  我要領養
+                </button>
+                {/* 移除考慮清單按鈕 */}
+                <CompareButton
+                  id={item.id}
+                  isHoverState={true}
+                  onRemove={onItemRemove}
+                />
+              </TableCell>
+            ))}
+          </TableRow>
         </TableBody>
       </Table>
     </div>

@@ -32,11 +32,19 @@ const CompareList = () => {
     getAnimalData();
   }, [compareIdList]);
 
+  const handleRemoveItem = (idToRemove) => {
+    const updateData = compareAnimalData.filter((item) => item.id !== idToRemove )
+    setCompareAnimalData(updateData)
+  };
+
 
   return (
     <div className="compare-page-container">
       <div className="cards-table-wrap">
-        <ComparedTable data={compareAnimalData} />
+        <ComparedTable
+          data={compareAnimalData}
+          onItemRemove={handleRemoveItem}
+        />
       </div>
     </div>
   );
