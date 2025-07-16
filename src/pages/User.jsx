@@ -1,4 +1,3 @@
-import {useState} from "react"
 import { useAuth } from "@/context/AuthContext.jsx"
 import { Link } from "react-router-dom"
 import Login from "@/components/Login"
@@ -13,6 +12,7 @@ const User = () => {
         // 如果 token 存在 (已登入狀態)
         <>
           <Admin/>
+
         </>
       ) : (
         // 如果 token 為 null (未登入狀態)

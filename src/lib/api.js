@@ -64,3 +64,20 @@ export async function fetchAnimalApi({ id }) {
     throw err;
   }
 }
+
+// 獲取 ENUM
+
+export async function fetchAnimalsEnumApi() {
+  try {
+    const res = await fetch(`${baseUrl}/animal/enums`);
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "Enums載入錯誤");
+    }
+    // 回傳整包資料
+    return data;
+  } catch (err) {
+    console.error("獲取資料錯誤：", err);
+    throw err;
+  }
+}

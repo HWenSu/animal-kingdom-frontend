@@ -17,10 +17,12 @@ const AnimalCards = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(null)
   const [totalItems, setTotalItems] = useState(null);
+  const [totalPages, setTotalPages] = useState(null);
 
 
   // 分頁邏輯
-  const { paginationRange, totalPages } = usePagination({
+  const { paginationRange } = usePagination({
+    totalPages,
     totalItems,
     currentPage,
     itemsPerPage,
@@ -37,17 +39,15 @@ const AnimalCards = () => {
     try {
       const data = await fetchAnimalsApi({currentPage});
       setAnimals(data.data)
-      setItemsPerPage(data.pagination.limit); 
-      setTotalItems(data.pagination.total);
+      setItemsPerPage(data.limit); 
+      setTotalItems(data.total);
+      setTotalPages(data.totalPages);
     } catch (err) {
       console.error(err)
     }
   }
   getData()
  }, [currentPage])
-
- console.log(animals)
-
 
   // 當前頁資料
   // const startIndex = (currentPage - 1) * itemsPerPage;
@@ -58,7 +58,7 @@ const AnimalCards = () => {
       <ul className="animal-cards-container">
         {animals.map((animal) => {
           const images = animal.resources.filter((resource) => resource.type === 1)          
-          const firstImage = images[0].url
+          const firstImage = images[0]?.url
           return (
             <li
               key={animal.id}
@@ -66,7 +66,7 @@ const AnimalCards = () => {
               onClick={() => navigate(`/adoption/${animal.id}`)}
             >
               <div className="animal-image-container">
-                <img src={firstImage} alt={animal.variety} />
+                <img src={firstImage} alt={animal.variety} loading="lazy" />
               </div>
               <h2>{animal.shelter_name}</h2>
               <div className="animal-info-container">

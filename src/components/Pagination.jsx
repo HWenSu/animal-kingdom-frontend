@@ -1,8 +1,14 @@
 import { useMemo } from "react";
 
-export function usePagination({totalItems, currentPage, itemsPerPage, siblingCount=1}) {
+export function usePagination({
+  totalPages,
+  totalItems,
+  currentPage,
+  itemsPerPage,
+  siblingCount = 1,
+}) {
   // 計算總頁數
-  const totalPages = Math.ceil(totalItems/itemsPerPage)
+  // const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const paginationRange = useMemo(() => {
     // 若資料尚未準備好
@@ -57,7 +63,6 @@ export function usePagination({totalItems, currentPage, itemsPerPage, siblingCou
   }, [totalItems, currentPage, itemsPerPage, siblingCount]);
 
   return {
-    paginationRange,
-    totalPages,
+    paginationRange
   };
 }
