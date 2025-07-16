@@ -21,8 +21,9 @@ const Dropdown = ({ label, options, value, onChange }) => {
             if (typeof option === "object" && option !== null) {
               //物件的處理方式
               const displayValue = option.variety || option.name;
+
               return (
-                <option key={option.id || index} value={option.id}>
+                <option key={option.id || index} value={option.variety}>
                   {displayValue}
                 </option>
               );

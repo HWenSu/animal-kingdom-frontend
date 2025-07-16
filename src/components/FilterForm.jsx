@@ -4,10 +4,11 @@ import Dropdown from "./Dropdown";
 import cookieBg from "../assets/cookieBg.svg"
 import { fetchAnimalsEnumApi }  from '../lib/api'
 
-const FilterForm = () => {
+const FilterForm = ({handleFilterSearch}) => {
   const [enumData, setEnumData] = useState(null);
   const [kinds, setKinds] = useState([]);
   const [conditions, setConditions] = useState([]);
+  const [selectedKindId, setSelectedKindId] = useState(null)
 
   const labelMap = {
     sex: "性別",
@@ -42,9 +43,9 @@ const FilterForm = () => {
   // 引用 useReducer資料
   const [state, dispatch] = useReducer(filterReducer, initialState);
 
-  const showKinds = useMemo(()=> {
-    if(Array.isArray(kinds)) {
-      return kinds.slice(0,2);
+  const showKinds = useMemo(() => {
+    if (Array.isArray(kinds)) {
+      return kinds.slice(0, 2);
     }
     return [];
   }, [kinds]);
@@ -54,7 +55,7 @@ const FilterForm = () => {
       return kinds.slice(2);
     }
     return [];
-    } , [kinds]);
+  }, [kinds]);
 
   const formattedConditions = useMemo(() => {
     return Object.entries(conditions).map(([key, value]) => ({
@@ -64,15 +65,18 @@ const FilterForm = () => {
     }));
   }, [conditions]);
 
+  console.log(formattedConditions)
+
   const isOtherKindsSelected = useMemo(() => {
     if (!state.kind || showKinds.length === 0) return false;
-    return !showKinds.some((kind) => kind.id.toString() === state.kind);
+    return !showKinds.some((kind) => kind.kind === state.kind);
   }, [state.kind, showKinds]);
 
 
-  // 處理品種選擇
+  // 處理動物種類選擇
   const handleKindChange = (e) => {
     dispatch({ type: "SET_KIND", payload: e.target.value });
+    setSelectedKindId(e.target.dataset.id);
   };
 
   // 處理其他篩選條件
@@ -107,12 +111,15 @@ const FilterForm = () => {
       kind: state.kind,
       age: state.age,
       bodytype: state.bodytype,
-      kind: state.kind,
-      shelter: state.shelters,
       colour: state.colour,
+      sex: state.sex,
+      shelter_pkid: state.shelters,
+      variety: state.varieties
     };
     console.log("篩選條件:", filters);
-    return filters; // 回傳篩選條件或篩選後的資料
+    if(handleFilterSearch){
+      handleFilterSearch(filters);
+    }
   };
 
   return (
@@ -126,7 +133,7 @@ const FilterForm = () => {
         </button>
       </div>
       <div className="filter-container">
-        {/* 品種篩選 */}
+        {/* 物種篩選 */}
         <ul className="category-list">
           {showKinds.map((kind) => (
             <li key={kind.id}>
@@ -134,9 +141,10 @@ const FilterForm = () => {
                 <input
                   type="radio"
                   name="category"
-                  value={kind.id}
-                  checked={state.kind === kind.id.toString()}
+                  value={kind.kind}
+                  checked={state.kind === kind.kind}
                   onChange={handleKindChange}
+                  data-id={kind.id} 
                 />
                 <span className="radio-mark"></span>
                 {kind.kind}
@@ -159,7 +167,7 @@ const FilterForm = () => {
             >
               <option value="">— 請選擇 —</option>
               {hiddenKinds.map((hiddenKind) => (
-                <option key={hiddenKind.id} value={hiddenKind.id}>
+                <option key={hiddenKind.id} value={hiddenKind.kind}>
                   {hiddenKind.kind}
                 </option>
               ))}
@@ -169,25 +177,19 @@ const FilterForm = () => {
         {/*  其他篩選條件 */}
         {formattedConditions &&
           formattedConditions.map((formattedCondition) => {
-            if (formattedCondition.label === "varieties") {
-              const selectedKindObject = kinds.find(
-                (k) => k.name === state.kind
-              );
-              const selectedKindId = selectedKindObject
-                ? selectedKindObject.id
-                : null;
-
+            if (formattedCondition.key === "varieties") {
               const filteredOptions = selectedKindId
-                ? formattedCondition.options.filter(
-                    (option) => option.kind_id === selectedKindId
-                  )
-                : []; // 如果還沒選 kind，就顯示空選項
+              ? formattedCondition.options.filter(
+                (option) => option.kind_id.toString() === selectedKindId
+              )
+              : ['暫無品種選擇']; // 如果還沒選 kind，就顯示空選項
+              console.log("filteredOptions", filteredOptions);
               return (
                 <Dropdown
                   key={formattedCondition.key}
                   label={formattedCondition.label}
                   options={filteredOptions}
-                  onChange={(value) => handleFilterChange("variety", value)}
+                  onChange={(value) => handleFilterChange("varieties", value)}
                   value={state[formattedCondition.key]}
                 />
               );
@@ -208,6 +210,6 @@ const FilterForm = () => {
       </div>
     </div>
   );
-}
+};
 
 export default FilterForm

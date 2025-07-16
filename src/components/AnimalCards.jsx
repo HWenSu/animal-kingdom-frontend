@@ -11,14 +11,15 @@ import {
   PaginationPrevious,
 } from "./ui/pagination";
 
-const AnimalCards = () => {
+const AnimalCards = ({ searchData }) => {
   const navigate = useNavigate();
   const [animals, setAnimals] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(null)
+  const [itemsPerPage, setItemsPerPage] = useState(null);
   const [totalItems, setTotalItems] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
 
+  console.log("searchData", searchData);
 
   // 分頁邏輯
   const { paginationRange } = usePagination({
@@ -34,20 +35,20 @@ const AnimalCards = () => {
   };
 
   // 取得資料
- useEffect(()=> {
-  const getData = async () => {
-    try {
-      const data = await fetchAnimalsApi({currentPage});
-      setAnimals(data.data)
-      setItemsPerPage(data.limit); 
-      setTotalItems(data.total);
-      setTotalPages(data.totalPages);
-    } catch (err) {
-      console.error(err)
-    }
-  }
-  getData()
- }, [currentPage])
+  useEffect(() => {
+    const getData = async () => {
+        try {
+          const data = await fetchAnimalsApi({ searchData, currentPage });
+          setAnimals(data.data);
+          setItemsPerPage(data.limit);
+          setTotalItems(data.total);
+          setTotalPages(data.totalPages);
+        } catch (err) {
+          console.error(err);
+        }
+    };
+    getData();
+  }, [searchData, currentPage]);
 
   // 當前頁資料
   // const startIndex = (currentPage - 1) * itemsPerPage;
@@ -57,8 +58,10 @@ const AnimalCards = () => {
     <div>
       <ul className="animal-cards-container">
         {animals.map((animal) => {
-          const images = animal.resources.filter((resource) => resource.type === 1)          
-          const firstImage = images[0]?.url
+          const images = animal.resources.filter(
+            (resource) => resource.type === 1
+          );
+          const firstImage = images[0]?.url;
           return (
             <li
               key={animal.id}

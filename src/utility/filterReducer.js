@@ -1,10 +1,11 @@
 const initialState = {
-  kind: null, 
-  age: null, 
+  kind: null,
+  age: null,
   bodytype: null,
   colour: null,
   sex: null,
-  shelters: null,
+  shelter_pkid: null,
+  variety: null
 };
 
 const filterReducer = (state, action) => {

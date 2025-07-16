@@ -1,3 +1,5 @@
+import { Value } from "sass";
+
 const baseUrl = "http://localhost:8080";
 
 // 登入或註冊通用函式 post
@@ -33,9 +35,25 @@ export async function userAuthApi({
 }
 
 // 獲取動物列表資料 api
-export async function fetchAnimalsApi({currentPage}) {
+export async function fetchAnimalsApi({ currentPage, searchData }) {
   try {
-    const res = await fetch(`${baseUrl}/animal?page=${currentPage}`);
+    const searchParams = new URLSearchParams();
+
+    // 遍歷傳入的 params 物件
+    if(searchData) {
+      Object.entries(searchData).forEach(([key, value]) => {
+        if (value) {
+          searchParams.append(key, value);
+        }
+      });
+    }
+
+    const queryString = searchParams.toString();
+    const finalUrl = queryString
+      ? `${baseUrl}/animal?${queryString}&?page=${currentPage}`
+      : `${baseUrl}/animal?page=${currentPage}`;
+
+    const res = await fetch(finalUrl);
     const data = await res.json();
     if (!res.ok) {
       throw new Error(data.message || "動物資料載入錯誤");
