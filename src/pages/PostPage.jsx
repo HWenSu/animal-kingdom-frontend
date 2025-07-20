@@ -1,7 +1,10 @@
+import AdoptionForm from "./AdoptionForm"
 
 const PostPage = () => {
   return (
-    <div>PostPage</div>
+    <div>
+      <AdoptionForm />
+    </div>
   )
 }
 
