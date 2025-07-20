@@ -8,8 +8,10 @@
 
 .category-card-container{
   display: flex;
-  margin: 2rem 4rem;
   justify-content: center;
+  margin:  0 auto;
+  max-width: 1200px;
+  flex-wrap: wrap;
 
   li{
   background-color: $light-blue-color;

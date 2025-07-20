@@ -43,9 +43,7 @@ const HomePage = () => {
         </svg>
         {/* Hero section: 功能選單 */}
         {/* 種類卡片 */}
-        <AnimalDataFetcher url={`${baseUrl}/animal?page=1`}>
-          {(animals) => <CategoryCard animals={animals} />}
-        </AnimalDataFetcher>
+          <CategoryCard/>
       </section>
     </div>
   );

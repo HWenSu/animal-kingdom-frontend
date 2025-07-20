@@ -17,8 +17,9 @@
   position: relative;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin: 4rem auto;
-  width: 60%;
+  width: 70%;
   transform: translateY(-28%);
 
   .filter-form-bg{
@@ -27,14 +28,20 @@
     margin-bottom: 1rem;
     position: absolute;
     z-index: -1;
+     img {
+      transform: translateY(-10%);
+     }
   }
   .filter-container{
     display: grid;
     place-items:  center;
-    margin: 2rem 0;
-    grid-template-columns: 30vw 30vw;
+    gap: 1rem;
+    grid-template-columns: 1fr 2fr;
     font-weight: 500;
     font-size: $font-sm;
+    width: 70%;
+    justify-content: center;
+    max-width: 1000px;
     
     @media (max-width: 768px) { 
       grid-template-columns: 1fr; // 小螢幕變成單欄排列
@@ -60,7 +67,7 @@
   }
 
     select{
-      width: 5vw;
+      // width: 5vw;
       min-width: 3rem;
       height: 6.5vh;
       padding: 0;
@@ -86,13 +93,13 @@
 
 .dropdown-container{
   display: grid;
-  grid-template-columns: 10vw 15vw;
+  grid-template-columns: 4rem 12rem;
   height: 3vw;
 }
 
 .search-btn{
   position: relative;
-  bottom: 3rem;
+  bottom: 50%;
   left: 50%;
   transform: translateX(-50%);
 }
