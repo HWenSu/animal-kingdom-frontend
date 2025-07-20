@@ -5,6 +5,8 @@ import Admin from "@/components/Admin"
 
 const User = () => {
   const { token, logout } = useAuth()
+  
+  console.log(token)
 
   return (
     <div>

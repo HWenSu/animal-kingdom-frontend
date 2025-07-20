@@ -3,32 +3,36 @@ import { userAuthApi } from "../lib/api.js";
 import { Button } from "@/components/ui/button";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import AlertPopUp from "../components/AlertPopUp.jsx";
+import { useAuth } from "../context/AuthContext";
+import { Check } from "lucide-react";
 
 
 export default function Verify() {
    const [searchParams] = useSearchParams();
    const [token, setToken] = useState(null);
 
+   const { login } = useAuth();
 
   // 使用 context 中的 login 函式
   const navigate = useNavigate();
   const API_BASE_URL = "http://localhost:8080";
   const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [userName, setUserName] = useState(null);
 
   // 描述所有註冊欄位的設定檔
   const registerFieldsConfig = [
     {
       name: "password",
       label: "密碼 *",
-      type: "text",
+      type: "password",
       placeholder: "請輸入您的密碼",
       minLength: 6
     },
     {
       name: "checkPassword",
       label: "確認密碼 *",
-      type: "text",
+      type: "password",
       placeholder: "請再輸入一次密碼",
     },
   ];
@@ -36,6 +40,7 @@ export default function Verify() {
   // 統一管理所有表單欄位的值
   const [formData, setFormData] = useState({
     password: "",
+    checkPassword: ""
   });
 
   // 存放客戶端驗證的錯誤訊息
@@ -63,7 +68,13 @@ useEffect(() => {
     const newErrors = {};
     if (!formData.password) {
       newErrors.password = "密碼為必填";
-    } 
+    } else if ( formData.password.length < 6 ) {
+      newErrors.password = "密碼長度至少為6個字元"
+    }  
+
+    if (formData.password !== formData.checkPassword ) {
+      newErrors.password = "兩次輸入的密碼不一致";
+    }
 
     return newErrors;
   };
@@ -99,6 +110,7 @@ useEffect(() => {
         },
       });
       setIsSuccessAlertOpen(true);
+      setUserName(data.user.username)
       console.log("註冊成功", data);
     } catch (error) {
       setApiError(error.message || "註冊失敗，請稍後再試。");
@@ -106,9 +118,31 @@ useEffect(() => {
     }
   };
 
-  const handleCloseSuccess = () => {
+  const handleCloseSuccess = async function() {
     setIsSuccessAlertOpen(false);
-    navigate("/log-in");
+    
+    try {
+      const data = await userAuthApi({
+        url: `${API_BASE_URL}/user/login`,
+        body: {
+          username: userName,
+          password: formData.password,
+        },
+      });
+
+      if(data && data.token) {
+        login(data.token)
+        setIsSuccessAlertOpen(true);
+        console.log("登入成功", data);
+      }
+
+    } catch (error) {
+      setApiError(error.message || "登入失敗，請稍後");
+      setIsAlertOpen(true);
+      console.log("登入失敗", error)
+    }
+
+    navigate("/");
   };
 
   return (

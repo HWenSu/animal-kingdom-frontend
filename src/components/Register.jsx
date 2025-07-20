@@ -71,6 +71,7 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); 
+    console.log(formData)
 
     // 先執行客戶端驗證
     const validationErrors = validate()
