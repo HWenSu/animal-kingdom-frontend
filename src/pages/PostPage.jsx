@@ -1,11 +1,12 @@
 import AdoptionForm from "./AdoptionForm"
 
+
 const PostPage = () => {
   return (
     <div>
-      <AdoptionForm />
+      <AdoptionForm isPost={true}/>
     </div>
-  )
+  );
 }
 
 export default PostPage

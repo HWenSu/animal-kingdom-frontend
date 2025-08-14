@@ -5,7 +5,9 @@ const initialState = {
   colour: null,
   sex: null,
   shelter_pkid: null,
-  variety: null
+  variety: null,
+  areas_id: null,
+  state: null,
 };
 
 const filterReducer = (state, action) => {
@@ -19,14 +21,18 @@ const filterReducer = (state, action) => {
     case "SET_SEX":
       return { ...state, sex: action.payload };
     case "SET_SHELTER":
-      return { ...state, shelters: action.payload };
+      return { ...state, shelter_pkid: action.payload };
     case "SET_KIND":
       return { ...state, kind: action.payload };
     case "SET_VARIETY":
-      return { ...state, varieties: action.payload };
+      return { ...state, variety: action.payload };
+    case "SET_AREA":
+      return { ...state, areas_id: action.payload };
+    case "SET_STATE":
+      return { ...state, state: action.payload };
     default:
       return state;
-  } 
-}
+  }
+};
 
 export { initialState, filterReducer };

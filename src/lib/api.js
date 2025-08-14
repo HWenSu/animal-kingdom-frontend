@@ -1,13 +1,18 @@
+import axios from "axios";
+import { configs } from "eslint-plugin-react-refresh";
 import { Value } from "sass";
+
+import { Beaker } from "lucide-react";
 
 const baseUrl = "http://localhost:8080";
 
-// 登入或註冊通用函式 post
-export async function userAuthApi({
-  url,
-  body,
-}) {
+const api = axios.create({
+  baseURL: baseUrl,
+  headers: { "Content-Type": "application/json" },
+});
 
+// 登入或註冊通用函式 post
+export async function userAuthApi({ url, body }) {
   try {
     const res = await fetch(url, {
       method: "POST",
@@ -25,7 +30,7 @@ export async function userAuthApi({
         data: data, // data 就是 { error: "帳號已被使用" }
         status: res.status,
       };
-      throw error
+      throw error;
     }
     return data;
   } catch (err) {
@@ -40,7 +45,7 @@ export async function fetchAnimalsApi({ currentPage, searchData }) {
     const searchParams = new URLSearchParams();
 
     // 遍歷傳入的 params 物件
-    if(searchData) {
+    if (searchData) {
       Object.entries(searchData).forEach(([key, value]) => {
         if (value) {
           searchParams.append(key, value);
@@ -67,7 +72,6 @@ export async function fetchAnimalsApi({ currentPage, searchData }) {
 }
 
 // 獲取單一動物資料 api
-
 export async function fetchAnimalApi({ id }) {
   try {
     const res = await fetch(`${baseUrl}/animal/${id}`);
@@ -84,7 +88,6 @@ export async function fetchAnimalApi({ id }) {
 }
 
 // 獲取 ENUM
-
 export async function fetchAnimalsEnumApi() {
   try {
     const res = await fetch(`${baseUrl}/animal/enums`);
@@ -98,4 +101,15 @@ export async function fetchAnimalsEnumApi() {
     console.error("獲取資料錯誤：", err);
     throw err;
   }
+}
+
+// 送養新增資料 create
+
+export async function createAnimalApi({ payload, token }) {
+  const { data } = await api.post(
+    `${baseUrl}/animal/create`,
+    payload,
+    token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
+  );
+  return data;
 }

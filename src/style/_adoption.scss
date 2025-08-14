@@ -158,3 +158,28 @@
     }
   }
 }
+
+.post-info-warp {
+  background-color: $pink-color;
+  border-radius: 28px;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  li {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+  input {
+    background-color: $light-blue-color;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5rem;
+    font-weight: 500;
+    // color: $pink-color;
+    &:focus{
+    outline: none;
+    // border: 2px solid $orange-color;
+    }
+  }
+}

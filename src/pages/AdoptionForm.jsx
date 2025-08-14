@@ -1,10 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
+import { initialState, filterReducer } from "../utility/filterReducer";
 import { useParams, useNavigate } from "react-router-dom";
 import InfoText from "@/components/InfoText";
-import { fetchAnimalApi } from "../lib/api";
+import { createAnimalApi, fetchAnimalApi } from "../lib/api";
 import AlertPopUp from "@/components/AlertPopUp";
+import { User } from "lucide-react";
+import Enum from "./Enum";
 
-const AdoptionForm = () => {
+import { useAuth } from "@/context/AuthContext.jsx";
+
+const AdoptionForm = ({ isPost }) => {
+  const { token, userId } = useAuth();
+
+  // 引用 useReducer資料
+  const [state, dispatch] = useReducer(filterReducer, initialState);
+
   const { id } = useParams();
   const navigate = useNavigate();
   // 描述所有表單欄位的設定檔
@@ -36,7 +46,7 @@ const AdoptionForm = () => {
   ];
 
   const [adoptAnimal, setAdoptAnimal] = useState([]);
-  const [isAlertOpen, setIsAlertOpen] = useState(false)
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -107,15 +117,54 @@ const AdoptionForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // 執行完整的表單驗證
     const validationErrors = validate(formData);
     setErrors(validationErrors);
 
-    // 2. 檢查錯誤物件是否為空，若為空代表驗證通過
-    if (Object.keys(validationErrors).length === 0) {
+    if (Object.keys(validationErrors).length !== 0) return;
+
+    // 呼叫送養api - 新增動物
+    if (isPost) {
+      const payload = {
+        // 動物資料
+        variety: "混種狗",
+        sex: "F",
+        age: "CHILD",
+        bodytype: "SMALL",
+        colour: "黑色",
+        state: "SURRENDER",
+        shelter_pkid: 99,
+        // 會員 id
+        userId,
+
+        // 送養人
+        username: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+        profession: formData.occupation,
+        reason: formData.reason,
+      };
+
+      console.log(payload);
+
+      const res = await createAnimalApi({ payload, token });
+      console.info("post res:", res);
+    } else {
+      const payload = {
+        animalId: id,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+        occupation: formData.occupation,
+        reason: formData.reason,
+      };
+      // @todo 領養申請 api
+
       // 將表單數據發送到後端
       console.log("表單驗證通過，提交:", {
         animalId: id,
@@ -129,57 +178,63 @@ const AdoptionForm = () => {
       });
 
       // 顯示成功訊息並重定向
-      setIsAlertOpen(true)
-      
+      setIsAlertOpen(true);
     }
   };
 
   const handleCloseAlert = () => {
     setIsAlertOpen(false);
     navigate(`/adoption/${id}`);
-  } 
+  };
 
   return (
     <div className="adoption-wrap">
       <div className="img-bg">
         <img
-          className="circle-image scale-[1.5] translate-x-[16rem] translate-y-[1.5rem]"
+          className={`circle-image scale-[1.5] translate-x-[16rem] translate-y-[1.5rem] ${
+            isPost && "hidden"
+          }`}
           src={imgUrl}
           alt={adoptAnimal.id}
         />
-        <InfoText data={adoptAnimal} />
+        <Enum />
       </div>
       <div className="adoption-form-container">
-        <h2>領養申請表單</h2>
+        <h2>{!isPost ? "領養申請表單" : "送養申請表單"}</h2>
         {/* 填寫表單 */}
         <form onSubmit={handleSubmit} className="adoption-form" noValidate>
-          {formFieldsConfig.map((field) => (
-            <div key={field.name}>
-              <label> {field.label} </label>
-              {/* 根據 component 類型決定渲染 input 或 textarea */}
-              {field.component === "input" ? (
-                <input
-                  type={field.type}
-                  name={field.name}
-                  value={formData[field.name]}
-                  onChange={handleChange}
-                  onBlur={field.validated ? handleBlur : undefined}
-                />
-              ) : (
-                <textarea
-                  name={field.name}
-                  value={formData[field.name]}
-                  onChange={handleChange}
-                  onBlur={field.validated ? handleBlur : undefined}
-                  rows={field.rows}
-                />
-              )}
-              {/* 驗證對應的錯誤訊息 */}
-              {field.validated && errors[field.name] && (
-                <div className="error-text"> {errors[field.name]} </div>
-              )}
-            </div>
-          ))}
+          {formFieldsConfig.map((field) => {
+            if (field.name === "reason" && isPost) {
+              field.label = "送養原因";
+            }
+            return (
+              <div key={field.name}>
+                <label> {field.label} </label>
+                {/* 根據 component 類型決定渲染 input 或 textarea */}
+                {field.component === "input" ? (
+                  <input
+                    type={field.type}
+                    name={field.name}
+                    value={formData[field.name]}
+                    onChange={handleChange}
+                    onBlur={field.validated ? handleBlur : undefined}
+                  />
+                ) : (
+                  <textarea
+                    name={field.name}
+                    value={formData[field.name]}
+                    onChange={handleChange}
+                    onBlur={field.validated ? handleBlur : undefined}
+                    rows={field.rows}
+                  />
+                )}
+                {/* 驗證對應的錯誤訊息 */}
+                {field.validated && errors[field.name] && (
+                  <div className="error-text"> {errors[field.name]} </div>
+                )}
+              </div>
+            );
+          })}
           {/* 行動按鈕 */}
           <div>
             <button
@@ -197,7 +252,9 @@ const AdoptionForm = () => {
       </div>
       {isAlertOpen && (
         <AlertPopUp
-          message={"領養申請已提交！我們會盡快與您聯繫。"}
+          message={`${
+            isPost ? "送養" : "領養"
+          }申請已提交！我們會盡快與您聯繫。`}
           toggleAlert={handleCloseAlert}
           isSecondBtn={false}
         />

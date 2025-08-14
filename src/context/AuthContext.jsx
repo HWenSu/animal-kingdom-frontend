@@ -1,14 +1,16 @@
 import { createContext, useContext, useState } from "react";
 
 // 建立 Context 物件
-const AuthContext = createContext()
+const AuthContext = createContext();
 
 // 提供全域登入狀態與方法  Provider 組件
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
+  const [userId, setUserId] = useState([]);
 
-  const login = (newToken) => {
+  const login = (newToken, data) => {
     setToken(newToken);
+    setUserId(data);
   };
 
   const logout = () => {
@@ -18,7 +20,7 @@ export function AuthProvider({ children }) {
   return (
     //子元件可以透過 useContext 取得value值:
     // token-使用者目前的登入狀態, login/logout - 登入登出時呼叫的函數
-    <AuthContext.Provider value={{ token, login, logout }}>
+    <AuthContext.Provider value={{ token, login, logout, userId }}>
       {children}
     </AuthContext.Provider>
   );

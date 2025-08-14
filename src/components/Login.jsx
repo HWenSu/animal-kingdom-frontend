@@ -49,8 +49,12 @@ export default function Login() {
   // 客戶端驗證函式
   const validate = () => {
     const newErrors = {};
-    if (!formData.username) { newErrors.username = "登入帳號為必填" } 
-    if (!formData.password) { newErrors.password = "登入密碼為必填"; } 
+    if (!formData.username) {
+      newErrors.username = "登入帳號為必填";
+    }
+    if (!formData.password) {
+      newErrors.password = "登入密碼為必填";
+    }
     return newErrors;
   };
 
@@ -85,16 +89,15 @@ export default function Login() {
         },
       });
 
-      if(data && data.token) {
-        login(data.token)
+      if (data && data.token) {
+        login(data.token, data.user.id);
         setIsSuccessAlertOpen(true);
         console.log("登入成功", data);
       }
-
     } catch (error) {
       setApiError(error.message || "登入失敗，請稍後");
       setIsAlertOpen(true);
-      console.log("登入失敗", error)
+      console.log("登入失敗", error);
     }
   };
 

@@ -1,7 +1,42 @@
 import React from 'react'
 
-const InfoText = ({data, isShow=false}) => {
-  return (
+const InfoText = ({data, isShow=false, isPost}) => {
+  return isPost ? (
+    <div className="post-info-warp">
+      <li>
+        <label>動物品種: </label>
+        <input type="text" />
+      </li>
+      <li>
+        <label>動物類型: </label>
+        <input type="text" />
+      </li>
+      <li>
+        <label>動物性別: </label>
+        <input type="text" />
+      </li>
+      <li>
+        <label>動物體型: </label>
+        <input type="text" />
+      </li>
+      <li>
+        <label>動物毛色: </label>
+        <input type="text" />
+      </li>
+      <li>
+        <label>動物年紀: </label>
+        <input type="text" />
+      </li>
+      <li>
+        <label>動物尋獲地: </label>
+        <input type="text" />
+      </li>
+      <li>
+        <label>動物個性: </label>
+        <input type="text" />
+      </li>
+    </div>
+  ) : (
     <div className="info-text-warp">
       <p>動物類型: {data.kind}</p>
       <p>動物性別: {data.sex}</p>
@@ -13,14 +48,17 @@ const InfoText = ({data, isShow=false}) => {
       <p>收容所地址: {data.shelter_address} </p>
       <p>聯絡電話: {data.shelter_tel}</p>
       {isShow && <p>收容編號: {data.animal_subid}</p>}
-      { isShow && <p>動物尋獲地: {data.animal_foundplace}</p>}
-      { isShow && <p>動物狀態: {data.animal_status}</p>}
-      { isShow && <p>
-        開放認養時間: {data.animal_opendate}~{data.animal_closeddate}
-      </p>}
-      { isShow && <p>資料更新時間: {data.album_update}</p>}
+      {isShow && <p>動物尋獲地: {data.animal_foundplace}</p>}
+      {isShow && <p>動物狀態: {data.animal_status}</p>}
+      {isShow && (
+        <p>
+          開放認養時間: {data.animal_opendate}~{data.animal_closeddate}
+        </p>
+      )}
+      {isShow && <p>資料更新時間: {data.album_update}</p>}
     </div>
   );
+
 }
 
 export default InfoText
