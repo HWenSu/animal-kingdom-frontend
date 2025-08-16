@@ -104,12 +104,17 @@ export async function fetchAnimalsEnumApi() {
 }
 
 // 送養新增資料 create
-
 export async function createAnimalApi({ payload, token }) {
   const { data } = await api.post(
     `${baseUrl}/animal/create`,
     payload,
     token ? { headers: { Authorization: `Bearer ${token}` } } : undefined
   );
+  return data;
+}
+
+// 呼叫領養
+export async function adoptionAnimalApi({ payload }) {
+  const { data } = await api.post(`${baseUrl}/adoption`, payload);
   return data;
 }

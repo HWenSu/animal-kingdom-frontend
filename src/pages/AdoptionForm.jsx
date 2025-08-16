@@ -1,8 +1,9 @@
 import { useEffect, useState, useReducer } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { createAnimalApi, fetchAnimalApi } from "../lib/api";
+import { createAnimalApi, fetchAnimalApi, adoptionAnimalApi } from "../lib/api";
 import AlertPopUp from "@/components/AlertPopUp";
 import Enum from "./Enum";
+import InfoText from "@/components/InfoText";
 import { useFilter } from "@/context/FilterContext";
 
 import { useAuth } from "@/context/AuthContext.jsx";
@@ -122,7 +123,6 @@ const AdoptionForm = ({ isPost }) => {
 
     if (Object.keys(validationErrors).length !== 0) return;
 
-    // 呼叫送養api - 新增動物
     if (isPost) {
       const payload = {
         // 動物資料
@@ -147,33 +147,30 @@ const AdoptionForm = ({ isPost }) => {
 
       console.log(payload);
 
+      // 呼叫送養api - 新增動物
       const res = await createAnimalApi({ payload, token });
       console.info("post res:", res);
+
+      setIsAlertOpen(true);
     } else {
+      const animalId = id;
       const payload = {
-        animalId: id,
-        name: formData.name,
+        animal_list_id: id,
+        username: formData.name,
         email: formData.email,
         phone: formData.phone,
         address: formData.address,
-        occupation: formData.occupation,
-        reason: formData.reason,
       };
-      // @todo 領養申請 api
-
       // 將表單數據發送到後端
       console.log("表單驗證通過，提交:", {
-        animalId: id,
+        animalId,
         ...formData,
       });
 
-      // 將表單數據發送到後端
-      console.log("表單提交:", {
-        animalId: id,
-        ...formData,
-      });
+      // 呼叫送養api
+      const res = await adoptionAnimalApi({ payload });
+      console.info("post res:", res);
 
-      // 顯示成功訊息並重定向
       setIsAlertOpen(true);
     }
   };
@@ -193,7 +190,7 @@ const AdoptionForm = ({ isPost }) => {
           src={imgUrl}
           alt={adoptAnimal.id}
         />
-        <Enum />
+        {isPost ? <Enum /> : <InfoText data={adoptAnimal} />}
       </div>
       <div className="adoption-form-container">
         <h2>{!isPost ? "領養申請表單" : "送養申請表單"}</h2>
