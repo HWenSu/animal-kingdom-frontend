@@ -1,9 +1,10 @@
-import { useReducer, useState, useEffect, useMemo } from "react";
-import { initialState, filterReducer } from "../utility/filterReducer";
+import { useState, useEffect, useMemo } from "react";
 import Dropdown from "../components/Dropdown";
 import { fetchAnimalsEnumApi } from "../lib/api";
+import { useFilter } from "@/context/FilterContext";
 
 const Enum = () => {
+  const { filter, dispatch } = useFilter();
   const [enumData, setEnumData] = useState(null);
   const [kinds, setKinds] = useState([]);
   const [conditions, setConditions] = useState([]);
@@ -42,9 +43,6 @@ const Enum = () => {
     }
   }, [enumData]);
 
-  // 引用 useReducer資料
-  const [state, dispatch] = useReducer(filterReducer, initialState);
-
   const showKinds = useMemo(() => {
     if (Array.isArray(kinds)) {
       return kinds.slice(0, 2);
@@ -72,9 +70,9 @@ const Enum = () => {
   console.log("formattedConditions", formattedConditions);
 
   const isOtherKindsSelected = useMemo(() => {
-    if (!state.kind || showKinds.length === 0) return false;
-    return !showKinds.some((kind) => kind.kind === state.kind);
-  }, [state.kind, showKinds]);
+    if (!filter.kind || showKinds.length === 0) return false;
+    return !showKinds.some((kind) => kind.kind === filter.kind);
+  }, [filter.kind, showKinds]);
 
   // 處理動物種類選擇
   const handleKindChange = (e) => {
@@ -115,14 +113,14 @@ const Enum = () => {
   };
 
   const filters = {
-    kind: state.kind,
-    age: state.age,
-    bodytype: state.bodytype,
-    colour: state.colour,
-    sex: state.sex,
-    shelter_pkid: state.shelter_pkid,
-    variety: state.variety,
-    areas_id: state.areas_id,
+    kind: filter.kind,
+    age: filter.age,
+    bodytype: filter.bodytype,
+    colour: filter.colour,
+    sex: filter.sex,
+    shelter_pkid: filter.shelter_pkid,
+    variety: filter.variety,
+    areas_id: filter.areas_id,
   };
   console.log("篩選條件:", filters);
 
@@ -138,7 +136,7 @@ const Enum = () => {
                   type="radio"
                   name="category"
                   value={kind.kind}
-                  checked={state.kind === kind.kind}
+                  checked={filter.kind === kind.kind}
                   onChange={handleKindChange}
                   data-id={kind.id}
                 />
@@ -179,14 +177,13 @@ const Enum = () => {
                     (option) => option.kind_id.toString() === selectedKindId
                   )
                 : ["暫無品種選擇"]; // 如果還沒選 kind，就顯示空選項
-              console.log("filteredOptions", filteredOptions);
               return (
                 <Dropdown
                   key={formattedCondition.key}
                   label={formattedCondition.label}
                   options={filteredOptions}
                   onChange={(value) => handleFilterChange("variety", value)}
-                  value={state[formattedCondition.key]}
+                  value={filter[formattedCondition.key]}
                 />
               );
             } else {
@@ -198,7 +195,7 @@ const Enum = () => {
                   onChange={(value) =>
                     handleFilterChange(formattedCondition.key, value)
                   }
-                  value={state[formattedCondition.key]}
+                  value={filter[formattedCondition.key]}
                 />
               );
             }

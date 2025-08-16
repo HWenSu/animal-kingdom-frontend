@@ -1,19 +1,15 @@
 import { useEffect, useState, useReducer } from "react";
-import { initialState, filterReducer } from "../utility/filterReducer";
 import { useParams, useNavigate } from "react-router-dom";
-import InfoText from "@/components/InfoText";
 import { createAnimalApi, fetchAnimalApi } from "../lib/api";
 import AlertPopUp from "@/components/AlertPopUp";
-import { User } from "lucide-react";
 import Enum from "./Enum";
+import { useFilter } from "@/context/FilterContext";
 
 import { useAuth } from "@/context/AuthContext.jsx";
 
 const AdoptionForm = ({ isPost }) => {
+  const { filter, dispatch } = useFilter();
   const { token, userId } = useAuth();
-
-  // 引用 useReducer資料
-  const [state, dispatch] = useReducer(filterReducer, initialState);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -130,12 +126,12 @@ const AdoptionForm = ({ isPost }) => {
     if (isPost) {
       const payload = {
         // 動物資料
-        variety: "混種狗",
-        sex: "F",
-        age: "CHILD",
-        bodytype: "SMALL",
-        colour: "黑色",
-        state: "SURRENDER",
+        variety: filter.variety,
+        sex: filter.sex,
+        age: filter.age,
+        bodytype: filter.bodytype,
+        colour: filter.colour,
+        state: filter.state,
         shelter_pkid: 99,
         // 會員 id
         userId,
