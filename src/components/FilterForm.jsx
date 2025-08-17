@@ -1,24 +1,23 @@
 import { useReducer, useState, useEffect, useMemo } from "react";
-import { initialState, filterReducer } from "../utility/filterReducer";
+import { useFilter } from "@/context/FilterContext";
 import Dropdown from "./Dropdown";
 import cookieBg from "../assets/cookieBg.svg";
 import { fetchAnimalsEnumApi } from "../lib/api";
 import Enum from "@/pages/Enum";
 
 const FilterForm = ({ handleFilterSearch }) => {
-  // 引用 useReducer資料
-  const [state, dispatch] = useReducer(filterReducer, initialState);
+  const { filter, dispatch } = useFilter();
 
   // 處理搜尋
   const handleSearch = () => {
     const filters = {
-      kind: state.kind,
-      age: state.age,
-      bodytype: state.bodytype,
-      colour: state.colour,
-      sex: state.sex,
-      shelter_pkid: state.shelters,
-      variety: state.varieties,
+      kind: filter.kind,
+      age: filter.age,
+      bodytype: filter.bodytype,
+      colour: filter.colour,
+      sex: filter.sex,
+      shelter_pkid: filter.shelters,
+      variety: filter.varieties,
     };
     console.log("篩選條件:", filters);
     if (handleFilterSearch) {
@@ -36,7 +35,7 @@ const FilterForm = ({ handleFilterSearch }) => {
           開始尋找
         </button>
       </div>
-      <Enum />
+      <Enum hiddenList={["state"]} />
     </div>
   );
 };
