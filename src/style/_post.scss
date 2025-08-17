@@ -1,0 +1,21 @@
+.post-page {
+  .filter-form-container {
+    background-color: $pink-color;
+    padding: 4em;
+    border-radius: 30px;
+    width: 100%;
+  }
+  .filter-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .category-list {
+      flex-wrap: wrap;
+      gap: 0.5em;
+      .custom-radio {
+
+      }
+    }
+  }
+}
