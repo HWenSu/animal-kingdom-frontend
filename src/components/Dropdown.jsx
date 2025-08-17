@@ -1,5 +1,4 @@
-
-const Dropdown = ({ label, options, value, onChange }) => {
+const Dropdown = ({ label, options, value, onChange, isHidden }) => {
   // 安全檢查，確保 options 是有效的陣列
   if (!Array.isArray(options) || options.length === 0) {
     return null;
@@ -11,13 +10,12 @@ const Dropdown = ({ label, options, value, onChange }) => {
       <div className="dropdown">
         <select
           className="custom-select"
-          value={value || ""} 
+          value={value || ""}
           onChange={(e) => onChange(e.target.value)}
         >
           <option value="">— 請選擇 —</option>
 
           {options.map((option, index) => {
-            
             if (typeof option === "object" && option !== null) {
               //物件的處理方式
               const displayValue = option.variety || option.name;

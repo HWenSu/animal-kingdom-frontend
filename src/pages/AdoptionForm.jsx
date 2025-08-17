@@ -190,7 +190,11 @@ const AdoptionForm = ({ isPost }) => {
           src={imgUrl}
           alt={adoptAnimal.id}
         />
-        {isPost ? <Enum /> : <InfoText data={adoptAnimal} />}
+        {isPost ? (
+          <Enum hiddenList={["state", "shelter_pkid"]} />
+        ) : (
+          <InfoText data={adoptAnimal} />
+        )}
       </div>
       <div className="adoption-form-container">
         <h2>{!isPost ? "領養申請表單" : "送養申請表單"}</h2>

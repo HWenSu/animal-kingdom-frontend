@@ -3,7 +3,7 @@ import Dropdown from "../components/Dropdown";
 import { fetchAnimalsEnumApi } from "../lib/api";
 import { useFilter } from "@/context/FilterContext";
 
-const Enum = () => {
+const Enum = ({ hiddenList }) => {
   const { filter, dispatch } = useFilter();
   const [enumData, setEnumData] = useState(null);
   const [kinds, setKinds] = useState([]);
@@ -65,9 +65,9 @@ const Enum = () => {
     }));
   }, [conditions]);
 
-  console.warn("kinds", kinds);
-  console.warn("enumData", enumData);
-  console.log("formattedConditions", formattedConditions);
+  const visibleConditions = formattedConditions.filter(
+    (condition) => !hiddenList?.includes(condition.key)
+  );
 
   const isOtherKindsSelected = useMemo(() => {
     if (!filter.kind || showKinds.length === 0) return false;
@@ -122,7 +122,7 @@ const Enum = () => {
     variety: filter.variety,
     areas_id: filter.areas_id,
   };
-  console.log("篩選條件:", filters);
+  console.log("輸入條件:", filters);
 
   return (
     <div className="filter-form-container">
@@ -169,33 +169,31 @@ const Enum = () => {
           </label>
         </ul>
         {/*  其他篩選條件 */}
-        {formattedConditions &&
-          formattedConditions.map((formattedCondition) => {
-            if (formattedCondition.key === "variety") {
+        {visibleConditions &&
+          visibleConditions.map((condition) => {
+            if (condition.key === "variety") {
               const filteredOptions = selectedKindId
-                ? formattedCondition.options.filter(
+                ? condition.options.filter(
                     (option) => option.kind_id.toString() === selectedKindId
                   )
                 : ["暫無品種選擇"]; // 如果還沒選 kind，就顯示空選項
               return (
                 <Dropdown
-                  key={formattedCondition.key}
-                  label={formattedCondition.label}
+                  key={condition.key}
+                  label={condition.label}
                   options={filteredOptions}
                   onChange={(value) => handleFilterChange("variety", value)}
-                  value={filter[formattedCondition.key]}
+                  value={filter[condition.key]}
                 />
               );
             } else {
               return (
                 <Dropdown
-                  key={formattedCondition.key}
-                  label={formattedCondition.label}
-                  options={formattedCondition.options}
-                  onChange={(value) =>
-                    handleFilterChange(formattedCondition.key, value)
-                  }
-                  value={filter[formattedCondition.key]}
+                  key={condition.key}
+                  label={condition.label}
+                  options={condition.options}
+                  onChange={(value) => handleFilterChange(condition.key, value)}
+                  value={filter[condition.key]}
                 />
               );
             }
